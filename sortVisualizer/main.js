@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import * as dat from 'dat.gui';
 
 
-/// set up
+/// SET UP
 const clock = new Clock();
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight,
@@ -53,27 +53,21 @@ cube[5].material = brightMaterial;
 
 cube[12].material = brightMaterial;
 
+// TODO: COMPARE FUNCTION
+// compare on cube[index].geometry.parameters.height;
 
 
-///A basic animation using keyframes
-
+/// the swap animation using keyframes
 var mixers;
 var mixer1 , mixer2;
+function swap(cubes, index1, index2){
 
-
-// COMPARE FUNCTION
-// compare on cube[3].geometry.parameters.height;
-
-
-// change to passing array and two indexes
-function swap(cube1, kube2){
-  //swap(cubes, index1, index2)
+  let cube1 = cubes[index1]; 
+  let kube2 = cubes[index2];
   let midway =  (cube1.position.x +  kube2.position.x)/2; 
-
-  // cube1 = cubes[index1]; 
-  // kube2 = cubes[index2];
-
   let times = [0, 2, 4];
+
+  //Positions that the cubes will be at
   let cube1_values = [
     cube1.position.x, 
     cube1.position.y, 
@@ -101,72 +95,76 @@ function swap(cube1, kube2){
     kube2.position.y,
     cube1.position.z, 
   ];
-
+  
+  // use len = -1 to automatically calculate the 
+  // length from the array of tracks
+  let len = -1;
+  
   let cube1_positionKF = new VectorKeyframeTrack('.position', times, cube1_values);
+  let cube1_tracks = [cube1_positionKF];
+  let cube1_clip = new AnimationClip('slowmove_cube', len, cube1_tracks);
+  let cube1_mixer = new AnimationMixer(cube1, THREE.InterpolateSmooth);
+  let cube1_action = cube1_mixer.clipAction(cube1_clip);
+  cube1_action.setLoop(THREE.LoopOnce);
+  cube1_action.clampWhenFinished =true;
+  cube1_action.enable =true;
+  cube1_action.play();
 
   let kube2_positionKF = new VectorKeyframeTrack('.position', times, kube2_values);
+  let kube2_tracks = [kube2_positionKF];
+  let kube2_clip = new AnimationClip('slowmove_kube', len, kube2_tracks);
+  let kube2_mixer = new AnimationMixer(kube2, THREE.InterpolateSmooth);
+  let kube2_action = kube2_mixer.clipAction(kube2_clip);
+  kube2_action.setLoop(THREE.LoopOnce);
+  kube2_action.clampWhenFinished =true;
+  kube2_action.enable =true;
+  kube2_action.play();
 
 
-  let tracks1 = [cube1_positionKF];
-
-  let tracks2 = [kube2_positionKF];
-
-
-  // use -1 to automatically calculate the length from the array of tracks
-  let len = -1;
-
-  let clip1 = new AnimationClip('slowmove_cube', len, tracks1);
-
-  let clip2 = new AnimationClip('slowmove_kube', len, tracks2);
+  //swapping the index of the meshes in the mesh array
+  cubes[index1] = kube2;
+  cubes[index2] = cube1;
 
 
-  let mixer1 = new AnimationMixer(cube1, THREE.InterpolateSmooth);
-
-  let mixer2 = new AnimationMixer(kube2, THREE.InterpolateSmooth);
-
-  let action1 = mixer1.clipAction(clip1);
-  action1.setLoop(THREE.LoopOnce);
-  action1.clampWhenFinished =true;
-  action1.enable =true;
-
-  let action2 = mixer2.clipAction(clip2);
-  action2.setLoop(THREE.LoopOnce);
-  action2.clampWhenFinished =true;
-  action2.enable =true;
-
-  action1.play();
-  action2.play();
-
-  return[mixer1, mixer2];
+  return[cube1_mixer, kube2_mixer];
 }
+//////////
+
 
 
 /// UI
 
 document.body.appendChild( renderer.domElement );
 document.getElementById("button").addEventListener(
-   'click', onPointerDown );
+   'click', onButtonClick );
 
-function onPointerDown( event ) {
-  mixers = swap(cube[5], cube[12]);
-  mixer1 = mixers[0];
-  mixer2 = mixers[1];
-  animate();
-}
-
+///
 
 
 //ANIMATION
-function animate() {
-  requestAnimationFrame(animate);
+
+function onButtonClick( event ) {
+  mixers = swap(cube, 5, 12);
+  mixer1 = mixers[0];
+  mixer2 = mixers[1];
+  swapAnimation();
+}
+
+function swapAnimation(){
+  requestAnimationFrame(swapAnimation);
   const delta = clock.getDelta();
   mixer1.update(delta);
   mixer2.update(delta);
   renderer.render(scene, camera);
-
 }
 
+function cameraAnimate() {
+  requestAnimationFrame(cameraAnimate);
+  controls.update();
+  renderer.render(scene, camera);
+}
 ///
-renderer.render(scene, camera);
 
-animate();
+
+renderer.render(scene, camera);
+cameraAnimate();

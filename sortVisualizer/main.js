@@ -61,8 +61,17 @@ var mixers;
 var mixer1 , mixer2;
 
 
+// COMPARE FUNCTION
+// compare on cube[3].geometry.parameters.height;
+
+
+// change to passing array and two indexes
 function swap(cube1, kube2){
+  //swap(cubes, index1, index2)
   let midway =  (cube1.position.x +  kube2.position.x)/2; 
+
+  // cube1 = cubes[index1]; 
+  // kube2 = cubes[index2];
 
   let times = [0, 2, 4];
   let cube1_values = [
@@ -77,10 +86,7 @@ function swap(cube1, kube2){
     kube2.position.x, 
     cube1.position.y,
     kube2.position.z,
-
-
   ];
-
 
   let kube2_values = [
     kube2.position.x, 
@@ -93,8 +99,7 @@ function swap(cube1, kube2){
 
     cube1.position.x, 
     kube2.position.y,
-    cube1.position.z,
-    
+    cube1.position.z, 
   ];
 
   let cube1_positionKF = new VectorKeyframeTrack('.position', times, cube1_values);
@@ -139,7 +144,8 @@ function swap(cube1, kube2){
 /// UI
 
 document.body.appendChild( renderer.domElement );
-document.addEventListener( 'auxclick', onPointerDown );
+document.getElementById("button").addEventListener(
+   'click', onPointerDown );
 
 function onPointerDown( event ) {
   mixers = swap(cube[5], cube[12]);
@@ -163,4 +169,4 @@ function animate() {
 ///
 renderer.render(scene, camera);
 
-// animate();
+animate();

@@ -41,11 +41,11 @@ var cube = [];
 var length = 23;
 for (let i = 0; i < 23; i++) {
 
-  let h = 3+Math.random()*10
+  let h = Math.abs(3+Math.random()*10)
   let geometry = new THREE.BoxGeometry(1, h, 1);
   cube[i] = new THREE.Mesh(geometry, material);
   cube[i].position.x = (i * 2) - (length);
-  cube[i].position.y += Math.abs(h/2);
+  cube[i].position.y += h/2;
   scene.add(cube[i]);
 }
 
@@ -121,7 +121,7 @@ function swap(cubes, index1, index2){
   kube2_action.play();
 
 
-  //swapping the index of the meshes in the mesh array
+  //swapping the index of the meshes within the mesh array
   cubes[index1] = kube2;
   cubes[index2] = cube1;
 
@@ -135,7 +135,7 @@ function swap(cubes, index1, index2){
 /// UI
 
 document.body.appendChild( renderer.domElement );
-document.getElementById("button").addEventListener(
+document.getElementById("swapButton").addEventListener(
    'click', onButtonClick );
 
 ///

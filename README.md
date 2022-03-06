@@ -1,11 +1,11 @@
 # COS 430 (Software Engineering): Term Project
 
 <p align="justify">
-  <br> <strong>Group ID:</strong> G 07</br>
-  <br> <strong>Group Members:</strong> Benjamin, Jack, Justin</br>
-  <br> <strong>Project Title:</strong> Tracking software that keeps records of repair work and other information about a vehicle</br>
-  <br> <strong>Project Description:</strong> Our app will keep track of information about repairs, maintenance, fuel efficiency, and compile all this information into an easily digestible format for budget purposes.</br>
-  <br> <strong>Application Type: </strong>Mobile App</br>
+  <br> <strong>Group ID:</strong> ?</br>
+  <br> <strong>Group Members:</strong> ?, ?, ?</br>
+  <br> <strong>Project Title:</strong> ?</br>
+  <br> <strong>Project Description:</strong> ?.</br>
+  <br> <strong>Application Type: </strong>?.</br>
  </p>
 
 ## Executive Summary

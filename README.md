@@ -1,11 +1,11 @@
 # COS 430 (Software Engineering): Term Project
 
 <p align="justify">
-  <br> <strong>Group ID:</strong> ?</br>
-  <br> <strong>Group Members:</strong> ?, ?, ?</br>
-  <br> <strong>Project Title:</strong> ?</br>
-  <br> <strong>Project Description:</strong> ?.</br>
-  <br> <strong>Application Type: </strong>?.</br>
+  <br> <strong>Group ID:</strong> G 10</br>
+  <br> <strong>Group Members:</strong> Stephen, Patrick, Kai</br>
+  <br> <strong>Project Title:</strong> Interactive web application to visualize common computer algorithms.</br>
+  <br> <strong>Project Description:</strong> ?</br>
+  <br> <strong>Application Type: </strong>?</br>
  </p>
 
 ## Executive Summary

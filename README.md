@@ -6,3 +6,6 @@ https://app.diagrams.net/#Hbeep-sl%2FCOS430SEProject%2Fmain%2FIteration%201%20UM
 
 Sequence diagram
 https://app.diagrams.net/#Hbeep-sl%2FCOS430SEProject%2Fmain%2FSequence%20Diagram.drawio
+
+Use case diagram
+https://app.diagrams.net/#Hbeep-sl%2FCOS430SEProject%2Fmain%2FUse%20Case%20Diagram.drawio

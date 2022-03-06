@@ -9,3 +9,6 @@ https://app.diagrams.net/#Hbeep-sl%2FCOS430SEProject%2Fmain%2FSequence%20Diagram
 
 Use case diagram
 https://app.diagrams.net/#Hbeep-sl%2FCOS430SEProject%2Fmain%2FUse%20Case%20Diagram.drawio
+
+Class diagram
+https://app.diagrams.net/#Hbeep-sl%2FCOS430SEProject%2Fmain%2FClass%20Diagram.drawio

@@ -30,7 +30,7 @@ To be completed by the group members...
 | Items        | Description              | Action Items and Deliverables                                                             |
 |--------------|--------------------------|-------------------------------------------------------------------------------------------|
 | User Story 1 | Creating an interactive display of the array to be sorted utilizing THREE.js BoxGeometry | sortVisualizer.js         |
-| User Story 2 | Creating a function to perform a swap of cubes and linking it to a button on the display                             |
+| User Story 2 | Creating a function to perform a swap of cubes and linking it to a button on the display | swap()                    |
 
 
 #### Iteration #2

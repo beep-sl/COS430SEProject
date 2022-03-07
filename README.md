@@ -29,56 +29,47 @@ To be completed by the group members...
 #### Iteration #1
 | Items        | Description              | Action Items and Deliverables                                                             |
 |--------------|--------------------------|-------------------------------------------------------------------------------------------|
-|  User Story  | To be completed by the group members...                                                                              |
-|    AAA       | To be completed by the group members...                                                                              |
-|    BBB       | To be completed by the group members...                                                                              |
-|    CCC       | To be completed by the group members...                                                                              |
-|    DDD       | To be completed by the group members...                                                                              |
-|    EEE       | To be completed by the group members...                                                                              |
+| User Story 1 | Creating an interactive display of the array to be sorted utilizing THREE.js BoxGeometry                             |
+| User Story 2 | Creating a function to perform a swap of cubes and linking it to a button on the display                             |
 
 
 #### Iteration #2
 | Items        | Description              | Action Items and Deliverables                                                             |
 |--------------|--------------------------|-------------------------------------------------------------------------------------------|
-|  User Story  | To be completed by the group members...                                                                              |
-|    AAA       | To be completed by the group members...                                                                              |
-|    BBB       | To be completed by the group members...                                                                              |
-|    CCC       | To be completed by the group members...                                                                              |
-|    DDD       | To be completed by the group members...                                                                              |
-|    EEE       | To be completed by the group members...                                                                              |
+| User Story 1 | Creating a function to perform a sort algorithm (quicksort, merge sort, bubble sort, etc.) that links to the swap    |
+|              | and animate functions to update the display                                                                          |
+| User Story 2 | Creating a function and button to reset the array                                                                    |
+| User Story 3 | Creating a function and button to randomize array                                                                    |
 
 
 
 #### Iteration #3
 | Items        | Description              | Action Items and Deliverables                                                             |
 |--------------|--------------------------|-------------------------------------------------------------------------------------------|
-|  User Story  | To be completed by the group members...                                                                              |
-|    AAA       | To be completed by the group members...                                                                              |
-|    BBB       | To be completed by the group members...                                                                              |
-|    CCC       | To be completed by the group members...                                                                              |
-|    DDD       | To be completed by the group members...                                                                              |
-|    EEE       | To be completed by the group members...                                                                              |
+| User Story 1 | Creating more functions/buttons to address all other applicable sorts                                                |
+| User Story 2 | Creating a header/footer for the website                                                                             |
+| User Story 3 | Publishing the website                                                                                               |
 
 
 ## UML Diagrams 
 #### [1] Use Case Diagrams
 <p align="justify">
-To be completed by the group members...
+https://app.diagrams.net/#Hbeep-sl%2FCOS430SEProject%2Fmain%2FUse%20Case%20Diagram.drawio
 </p>
 
 #### [2] Class Diagrams
 <p align="justify">
-To be completed by the group members...
+https://app.diagrams.net/#Hbeep-sl%2FCOS430SEProject%2Fmain%2FClass%20Diagram.drawio
 </p>
 
 #### [3] Sequence Diagrams 
 <p align="justify">
-To be completed by the group members...
+https://app.diagrams.net/#Hbeep-sl%2FCOS430SEProject%2Fmain%2FSequence%20Diagram.drawio
 </p>
 
 #### [4] Deployment Diagrams 
 <p align="justify">
-To be completed by the group members...
+https://app.diagrams.net/#Hbeep-sl%2FCOS430SEProject%2Fmain%2FDeployment%20Diagram.drawio
 </p>
 
 

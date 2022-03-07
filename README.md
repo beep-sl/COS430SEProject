@@ -4,7 +4,7 @@
   <br> <strong>Group ID:</strong> G 10</br>
   <br> <strong>Group Members:</strong> Stephen, Patrick, Kai</br>
   <br> <strong>Project Title:</strong> Interactive web application to visualize common computer algorithms.</br>
-  <br> <strong>Project Description:</strong>Our website will have a 3D visualization of an array of cubes representing an array to be sorted, along with buttons to perform different sorts, randomization of array, and resetting. The project will help those who are learning algorithms to better understand what is going on behind the code, with appealing visuals. It’s web-based application will allow easy access, with a clear, non-cluttered directive. Our 3D visualizer will be a new approach to the other visualizers, with better looking models.</br>
+  <br> <strong>Project Description:</strong>Application to visualize sort algorithms, to help those who are learning.</br>
   <br> <strong>Application Type: </strong>Web-based</br>
  </p>
 
@@ -14,7 +14,7 @@
 Below, you will find a brief executive summary of our term project, including how the project will be relevant to end-users.
 </p>
 <p align="justify">
-To be completed by the group members...
+Our website will have a 3D visualization of an array of cubes representing an array to be sorted, along with buttons to perform different sorts, randomization of array, and resetting. The project will help those who are learning algorithms to better understand what is going on behind the code, with appealing visuals. It’s web-based application will allow easy access, with a clear, non-cluttered directive. Our 3D visualizer will be a new approach to the other visualizers, with better looking models.
 </p>
 
 ## Problem Statement

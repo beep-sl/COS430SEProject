@@ -37,7 +37,7 @@ To be completed by the group members...
 | Items        | Description              | Action Items and Deliverables                                                             |
 |--------------|--------------------------|-------------------------------------------------------------------------------------------|
 | User Story 1 | Creating a function to perform a sort algorithm (quicksort, merge sort, bubble sort, etc.) that links to the swap    |
-               and animate functions to update the display                                                                            |
+               and animate functions to update the display                                                                            
 | User Story 2 | Creating a function and button to reset the array                                                                    |
 | User Story 3 | Creating a function and button to randomize array                                                                    |
 

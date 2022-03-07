@@ -20,7 +20,7 @@ Our website will have a 3D visualization of an array of cubes representing an ar
 ## Problem Statement
 
 <p align="justify">
-To be completed by the group members...
+There are many web-based visualizations across the internet for learning algorithms. Most of the existing algorithm visualizers are simple and 2D, and not very attention-grabbing. In this project, we seek to make a more interactive and visually appealing resource for people to learn. Our visualizer will be easily accessed from any computer that has internet access and will support multiple types of algorithms. This project will address multiple user stories spanned over three iterations, ensuring all features will be functional.
 </p>
 
 

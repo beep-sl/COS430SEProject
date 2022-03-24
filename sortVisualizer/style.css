@@ -17,10 +17,40 @@ body{
   transform: translate(0,50%); 
 }
 
-#swapButton {
+.button {
     font-family: 'Titan One', cursive;
     font-size: 300%;
     color: rgb(253, 133, 169);
     background-color : rgb(55, 29, 63);
     padding: 0.5%;
 }
+
+#insertionSortButtonContainer {
+    margin: 0;
+    position: relative;
+    left: -5%;
+    transform: translate(0,50%); 
+  }
+  
+  #insertionSortButton {
+      font-family: 'Titan One', cursive;
+      font-size: 300%;
+      color: rgb(253, 133, 169);
+      background-color : rgb(55, 29, 63);
+      padding: 0.5%;
+  }
+
+  #bubbleSortButtonContainer {
+    margin: 0;
+    position: relative;
+    left: -1%;
+    transform: translate(0,50%); 
+  }
+  
+  #bubbleSortButton {
+      font-family: 'Titan One', cursive;
+      font-size: 300%;
+      color: rgb(253, 133, 169);
+      background-color : rgb(55, 29, 63);
+      padding: 0.5%;
+  }

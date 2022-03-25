@@ -54,3 +54,31 @@ body{
       background-color : rgb(55, 29, 63);
       padding: 0.5%;
   }
+
+  .rangeslider{
+      position: relative;
+      left: -450px;
+      top: -300px;
+    width: 100%;
+    }
+
+    .myslider {
+        -webkit-appearance: none;
+        background-color : rgb(55, 29, 63);
+        width: 50%;
+        height: 20px;
+        opacity: 2;
+       }
+
+       .myslider:hover {
+        opacity: 1;
+    }
+
+    .myslider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        cursor: pointer;
+        
+        background: rgb(253, 133, 169);
+        width: 5%;
+        height: 20px;
+    }

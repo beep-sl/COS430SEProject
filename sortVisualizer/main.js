@@ -66,7 +66,7 @@ cube[12].material = brightMaterial;**/
 var mixers;
 var mixer1 , mixer2;
 function swap(cubes, index1, index2){
-  
+  var speed = document.getElementById("sliderRange").value;
   let cube1 = cubes[index1]; 
   let kube2 = cubes[index2];
 
@@ -74,7 +74,7 @@ function swap(cubes, index1, index2){
   brightCubes(index1, index2);
 
   let midway =  (cube1.position.x + kube2.position.x)/2; 
-  let times = [0, 2, 4];
+  let times = [0, (speed * .15), (speed * .3)];
 
   //Positions that the cubes will be at
   let cube1_values = [
@@ -199,7 +199,8 @@ async function bubbleSort(cube) {
 
         swapAnimation();
         //Wait for animation to finish before executing more code
-        await sleep(7000);
+        var speed = document.getElementById("sliderRange").value;
+        await sleep(speed * 450);
 
         resetColors(j, j+1);
       }
@@ -220,6 +221,13 @@ document.getElementById("insertionSortButton").addEventListener(
   'click', insertionSortOnClick );
 document.getElementById("bubbleSortButton").addEventListener(
   'click', bubbleSortOnClick );
+  var rangeslider = document.getElementById("sliderRange");
+  var output = document.getElementById("demo");
+  output.innerHTML = rangeslider.value;
+  
+  rangeslider.oninput = function() {
+    //output.innerHTML = this.value;
+  }
 ///
 
 function reset(){
@@ -314,7 +322,7 @@ async function woohooCubes(n) {
   for (var i = 0; i < n; i++) {
     cube[i].material = brightMaterial;
     renderer.render(scene, camera);
-    await sleep(100);
+    await sleep(50);
   }
 }
 

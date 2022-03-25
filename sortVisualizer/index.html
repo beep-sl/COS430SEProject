@@ -12,7 +12,16 @@
     <div id="swapButtonContainer"> 
       <button id="swapButton" class = "button">SWAP!</button>
       <button id="resetButton" class = "button">RESET!</button>
-
+      <div id="insertionSortButtonContainer"> 
+        <button id="insertionSortButton" class = "button" onclick="insertionSortOnClick()">INSERTION SORT!</button>
+      </div>
+      <div id="bubbleSortButtonContainer"> 
+        <button id="bubbleSortButton" class = "button" onclick="bubbleSortOnClick()">BUBBLE SORT!</button>
+      </div>
+      <div class="rangeslider">
+        <input type="range" min=".1" max="5" value="2.5"
+                       class="myslider" id="sliderRange">
+      </div>
     </div>
   </div>
     <div id="app"></div>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>COS 430 Sort Visualizer</title>
+  </head>
+
+  <body>
+  <div id="header">
+    <div id="swapButtonContainer"> 
+      <button id="swapButton" class = "button">SWAP!</button>
+      <button id="startButton" class = "button">START!</button>
+      <button id="resetButton" class = "button">RESET!</button>
+      
+      <select id="sortSelect">
+        <option value="noOption">Choose an algorithm...</option>
+        <option value="insertionSort">Insertion Sort</option>
+        <option value="bubbleSort">Bubble Sort</option>
+        <option value="quickSort">Quick Sort</option>
+      </select>
+
+    </div>
+  </div>
+    <div id="app"></div>
+    <script type="module" src="/main.js"></script>
+  </body>
+
+</html>

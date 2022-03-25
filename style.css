@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Titan+One');
+
+body{
+    background-color : #000;
+}
+
+#header {
+    width: 100%;
+
+    align-items: center;
+}
+
+#swapButtonContainer {
+  margin: 0;
+  position: relative;
+  left: 45%;
+  transform: translate(0,50%); 
+}
+
+.button {
+    font-family: 'Titan One', cursive;
+    font-size: 300%;
+    color: rgb(253, 133, 169);
+    background-color : rgb(55, 29, 63);
+    padding: 0.5%;
+}

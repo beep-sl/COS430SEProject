@@ -36,7 +36,7 @@ var brightMaterial = new THREE.MeshStandardMaterial({color: 0x1F0FFF});
 var cube = [];
 const xPositions = [];
 const cubeHeights = [];
-const arrayLength = 23;
+const arrayLength = 13;
 for (let i = 0; i < arrayLength; i++) {
 
   let h = Math.abs(3+Math.random()*10)
@@ -69,8 +69,7 @@ cameraAnimate();
 
 
 /// the swap animation using keyframes
-var mixers;
-var mixer1 , mixer2;
+
 function swap(cubes, index1, index2){
   var speed = document.getElementById("sliderRange").value;
   let cube1 = cubes[index1]; 
@@ -163,6 +162,73 @@ function compareCubes(index1, index2){
   return (cube[index1].geometry.parameters.height > cube[index2].geometry.parameters.height);
 }
 
+function moveCubeRelativelyX(theCube, initPos, relMotion){
+  var speed = document.getElementById("sliderRange").value;
+  // let theCube = cube[cubeIndex]; 
+
+  let times = [0, (speed * .3)];
+
+  //Positions that the cubes will be at
+  let cube1_values = [
+    theCube.position.x, 
+    theCube.position.y, 
+    theCube.position.z, 
+
+    xPositions[initPos+relMotion], 
+    theCube.position.y,
+    theCube.position.z, 
+  ];
+
+  // use len = -1 to automatically calculate the 
+  // length from the array of tracks
+  let len = -1;
+  
+  let positionKF = new VectorKeyframeTrack('.position', times, cube1_values);
+  let tracks = [positionKF];
+  let clip = new AnimationClip('slowmove_cube', len, tracks);
+  let mixer = new AnimationMixer(theCube, THREE.InterpolateSmooth);
+  let action = mixer.clipAction(clip);
+  action.setLoop(THREE.LoopOnce);
+  action.clampWhenFinished = true;
+  action.enable =true;
+  action.play();
+
+  return mixer;
+}
+
+function moveCubeRelativelyZ(theCube, relMotion){
+  var speed = document.getElementById("sliderRange").value;
+  // let theCube = cube[cubeIndex]; 
+
+  let times = [0, (speed * .3)];
+  let currentPosZ = theCube.position.z;
+  //Positions that the cubes will be at
+  let cube1_values = [
+    theCube.position.x, 
+    theCube.position.y, 
+    currentPosZ, 
+
+    theCube.position.x, 
+    theCube.position.y,
+    currentPosZ+relMotion, 
+  ];
+
+  // use len = -1 to automatically calculate the 
+  // length from the array of tracks
+  let len = -1;
+  
+  let positionKF = new VectorKeyframeTrack('.position', times, cube1_values);
+  let tracks = [positionKF];
+  let clip = new AnimationClip('slowmove_cube', len, tracks);
+  let mixer = new AnimationMixer(theCube, THREE.InterpolateSmooth);
+  let action = mixer.clipAction(clip);
+  action.setLoop(THREE.LoopOnce);
+  action.clampWhenFinished = true;
+  action.enable =true;
+  action.play();
+
+  return mixer;
+}
 
 
 /**
@@ -171,29 +237,38 @@ function compareCubes(index1, index2){
  * @param {} cube 
  * @param {*} n 
  */
-async function insertionSort(cube) {
-  var n = 23;
-  for (var i = 1; i < n; i++) {
-    var j = i-1;
-    while ((j > 0) && (cube[i].geometry.parameters.height < cube[j].geometry.parameters.height)) {
-      //Should just assign cube[j+1] = cube[i]
-      mixers = swap(cube, j+1, j);
-      mixer1 = mixers[0];s
-      mixer2 = mixers[1];
+async function insertionSort(cube, n) {
 
-      swapAnimation();
-      //Wait for animation to finish
-      await sleep(7000);
+  for (var i = 1; i < n; i++) {
+    let current = cube[i];
+    let j = i-1;
+    var speed = document.getElementById("sliderRange").value;
+    current.material = brightMaterial;
+    advanceMixer = moveCubeRelativelyZ(current, 2);
+    advanceAnimation();
+    await sleep(speed*450);
+
+    while((j > -1) && (cube[j].geometry.parameters.height > current.geometry.parameters.height)){
+      var speed = document.getElementById("sliderRange").value;
+      advanceMixer = moveCubeRelativelyX(current, j+1, -1);
+      advanceAnimation();
+      await sleep(speed*450);
+
+      advanceMixer = moveCubeRelativelyX(cube[j],j, 1);
+      advanceAnimation();
+      cube[j+1] = cube[j];
+      await sleep(speed*450);
       j--;
     }
-    //Should just assign cube[j+1] = cube[i]
-    mixers = swap(cube, j+1, i);
-    mixer1 = mixers[0];
-    mixer2 = mixers[1];
+    // current.position.x = xPositions[j+1];
+    cube[j+1] = current;
+    var speed = document.getElementById("sliderRange").value;
 
-    swapAnimation();
-    //Wait for animation to finish
-    await sleep(7000);
+    advanceMixer = moveCubeRelativelyZ(current, -2);
+    advanceAnimation();
+    await sleep(speed*450);
+    current.material = basicMaterial;
+
   }
 }
 
@@ -207,14 +282,14 @@ async function bubbleSort(cube) {
   var i, j;
   for (i = 0; i < n-1; i++) {
     for (j = 0; j < n-i-1; j++) {
+      var speed = document.getElementById("sliderRange").value;
       if (compareCubes(j,j+1)) {
-        mixers = swap(cube, j, j+1);
-        mixer1 = mixers[0];
-        mixer2 = mixers[1];
+        swapMixers = swap(cube, j, j+1);
+        swapMixer1 = swapMixers[0];
+        swapMixer2 = swapMixers[1];
 
         swapAnimation();
         //Wait for animation to finish before executing more code
-        var speed = document.getElementById("sliderRange").value;
         await sleep(speed * 450);
 
         resetColors(j, j+1);
@@ -232,19 +307,19 @@ async function bubbleSort(cube) {
 /// UI
 
 document.body.appendChild( renderer.domElement );
-document.getElementById("swapButton").addEventListener('click', swapOnClick );
+document.getElementById("swapButton").addEventListener('click', advanceOnClick );
 document.getElementById("resetButton").addEventListener('click', resetOnClick );
 document.getElementById("insertionSortButton").addEventListener(
   'click', insertionSortOnClick );
 document.getElementById("bubbleSortButton").addEventListener(
   'click', bubbleSortOnClick );
-  var rangeslider = document.getElementById("sliderRange");
-  var output = document.getElementById("demo");
-  output.innerHTML = rangeslider.value;
-  
-  rangeslider.oninput = function() {
-    //output.innerHTML = this.value;
-  }
+var rangeslider = document.getElementById("sliderRange");
+var output = document.getElementById("demo");
+output.innerHTML = rangeslider.value;
+
+rangeslider.oninput = function() {
+  //output.innerHTML = this.value;
+}
 ///
 
 function reset(){
@@ -270,34 +345,51 @@ renderer.render(scene, camera);
 }
 
 //ANIMATION
+var advanceMixer;
 
-function resetOnClick(){
-  reset();
+function advanceOnClick() {
+  advanceMixer = moveCubeRelativelyX(cube[5],5, 1);
+  advanceAnimation();
 }
 
-function swapOnClick() {
-  mixers = swap(cube, 5, 12);
-  mixer1 = mixers[0];
-  mixer2 = mixers[1];
+function advanceAnimation(){
+  requestAnimationFrame(advanceAnimation);
+  let delta = clock.getDelta();
+  advanceMixer.update(delta);
+  renderer.render(scene, camera);
+}
 
+
+var swapMixers;
+var swapMixer1 , swapMixer2;
+
+function swapOnClick() {
+  swapMixers = swap(cube, 5, 12);
+  swapMixer1 = swapMixers[0];
+  swapMixer2 = swapMixers[1];
   swapAnimation();
 }
 
+function swapAnimation(){
+  requestAnimationFrame(swapAnimation);
+  let delta = clock.getDelta();
+  swapMixer1.update(delta);
+  swapMixer2.update(delta);
+  renderer.render(scene, camera);
+}
+
+
+
 function insertionSortOnClick( event ) {
-  insertionSort(cube, length);
+  insertionSort(cube, arrayLength);
 }
 
 function bubbleSortOnClick( event ) {
   bubbleSort(cube);
 }
 
-function swapAnimation(){
-  requestAnimationFrame(swapAnimation);
-  let delta = clock.getDelta();
-  mixer1.update(delta);
-  mixer2.update(delta);
-  renderer.render(scene, camera);
-
+function resetOnClick(){
+  reset();
 }
 
 /**

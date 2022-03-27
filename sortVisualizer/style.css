@@ -17,7 +17,7 @@ body{
   transform: translate(0,50%); 
 }
 
-#swapButton {
+.button {
     font-family: 'Titan One', cursive;
     font-size: 300%;
     color: rgb(253, 133, 169);

@@ -198,9 +198,11 @@ function moveCubeRelativelyX(theCube, initPos, relMotion){
 
 function moveCubeRelativelyZ(theCube, relMotion){
   var speed = document.getElementById("sliderRange").value;
+  // let theCube = cube[cubeIndex]; 
+
   let times = [0, (speed * .3)];
   let currentPosZ = theCube.position.z;
-
+  //Positions that the cubes will be at
   let cube1_values = [
     theCube.position.x, 
     theCube.position.y, 
@@ -211,6 +213,8 @@ function moveCubeRelativelyZ(theCube, relMotion){
     currentPosZ+relMotion, 
   ];
 
+  // use len = -1 to automatically calculate the 
+  // length from the array of tracks
   let len = -1;
   
   let positionKF = new VectorKeyframeTrack('.position', times, cube1_values);
@@ -256,6 +260,7 @@ async function insertionSort(cube, n) {
       await sleep(speed*450);
       j--;
     }
+    // current.position.x = xPositions[j+1];
     cube[j+1] = current;
     var speed = document.getElementById("sliderRange").value;
 
@@ -271,7 +276,9 @@ async function insertionSort(cube, n) {
  * Bubble sort. Works correctly. Could use faster animation speed
  * @param {} cube 
  */
-async function bubbleSort(cube, n) {  
+async function bubbleSort(cube) {
+  var n = 23;
+  
   var i, j;
   for (i = 0; i < n-1; i++) {
     for (j = 0; j < n-i-1; j++) {
@@ -280,7 +287,6 @@ async function bubbleSort(cube, n) {
         swapMixers = swap(cube, j, j+1);
         swapMixer1 = swapMixers[0];
         swapMixer2 = swapMixers[1];
-        var speed = document.getElementById("sliderRange").value;
 
         swapAnimation();
         //Wait for animation to finish before executing more code
@@ -301,7 +307,7 @@ async function bubbleSort(cube, n) {
 /// UI
 
 document.body.appendChild( renderer.domElement );
-document.getElementById("swapButton").addEventListener('click', swapOnClick );
+document.getElementById("swapButton").addEventListener('click', advanceOnClick );
 document.getElementById("resetButton").addEventListener('click', resetOnClick );
 document.getElementById("insertionSortButton").addEventListener(
   'click', insertionSortOnClick );
@@ -312,6 +318,7 @@ var output = document.getElementById("demo");
 output.innerHTML = rangeslider.value;
 
 rangeslider.oninput = function() {
+  //output.innerHTML = this.value;
 }
 ///
 
@@ -320,6 +327,9 @@ function reset(){
   for (let i = scene.children.length - 1; i >= 0; i--) {
     if(scene.children[i].type === "Mesh")
         scene.remove(scene.children[i]);
+    // if(scene.children[i].type === "AnimationAction")
+    //   scene.children[i].stop();
+      
 }
 for (let i = 0; i < arrayLength; i++) {
 
@@ -349,6 +359,7 @@ function advanceAnimation(){
   renderer.render(scene, camera);
 }
 
+
 var swapMixers;
 var swapMixer1 , swapMixer2;
 
@@ -367,12 +378,14 @@ function swapAnimation(){
   renderer.render(scene, camera);
 }
 
+
+
 function insertionSortOnClick( event ) {
   insertionSort(cube, arrayLength);
 }
 
 function bubbleSortOnClick( event ) {
-  bubbleSort(cube, arrayLength);
+  bubbleSort(cube);
 }
 
 function resetOnClick(){

@@ -1,7 +1,9 @@
 import './style.css'
-import{ OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
+import{OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {AnimationClip, Clock,  NumberKeyframeTrack, VectorKeyframeTrack , AnimationMixer} from 'three';
 import * as THREE from 'three';
+import * as dat from 'dat.gui';
+import { SkeletonHelper } from 'three';
 
 /// SET UP
 const clock = new Clock();
@@ -17,7 +19,6 @@ var renderer = new THREE.WebGL1Renderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-
 ///  LIGHTS
 const ambLight = new THREE.AmbientLight(0xFFFFFF, 1);
 
@@ -32,6 +33,7 @@ scene.add(ambLight, pointlight1, pointlight2);
 /// BOXES
 const basicMaterial = new THREE.MeshStandardMaterial({color: 0x770070});
 var brightMaterial = new THREE.MeshStandardMaterial({color: 0x1F0FFF});
+const pivotColor = new THREE.MeshStandardMaterial({color: 0xFF0000})
 
 var cube = [];
 const xPositions = [];
@@ -65,11 +67,7 @@ renderer.render(scene, camera);
 cameraAnimate();
 
 
-
-
-
 /// the swap animation using keyframes
-
 function swap(cubes, index1, index2){
   var speed = document.getElementById("sliderRange").value;
   let cube1 = cubes[index1]; 
@@ -156,10 +154,18 @@ const sleep = (time) => {
   return new Promise(resolve => setTimeout(resolve, time))
 }
 
-
 function compareCubes(index1, index2){
   brightCubes(index1, index2);
   return (cube[index1].geometry.parameters.height > cube[index2].geometry.parameters.height);
+}
+
+/*
+ * Compare cube but changes pivot color
+*/
+function compareCubesWithPivot(index1, pivot){
+  changeColor(index1, brightMaterial)
+  changeColor(pivot, pivotColor);
+  return (cube[index1].geometry.parameters.height > cube[pivot].geometry.parameters.height);
 }
 
 function moveCubeRelativelyX(theCube, initPos, relMotion){
@@ -198,11 +204,9 @@ function moveCubeRelativelyX(theCube, initPos, relMotion){
 
 function moveCubeRelativelyZ(theCube, relMotion){
   var speed = document.getElementById("sliderRange").value;
-  // let theCube = cube[cubeIndex]; 
-
   let times = [0, (speed * .3)];
   let currentPosZ = theCube.position.z;
-  //Positions that the cubes will be at
+
   let cube1_values = [
     theCube.position.x, 
     theCube.position.y, 
@@ -213,8 +217,6 @@ function moveCubeRelativelyZ(theCube, relMotion){
     currentPosZ+relMotion, 
   ];
 
-  // use len = -1 to automatically calculate the 
-  // length from the array of tracks
   let len = -1;
   
   let positionKF = new VectorKeyframeTrack('.position', times, cube1_values);
@@ -230,14 +232,13 @@ function moveCubeRelativelyZ(theCube, relMotion){
   return mixer;
 }
 
-
 /**
  * Insertion sort. Not implemented correctly, should not be calling swap(),
  * separate animation needed
  * @param {} cube 
  * @param {*} n 
  */
-async function insertionSort(cube, n) {
+ async function insertionSort(cube, n) {
 
   for (var i = 1; i < n; i++) {
     let current = cube[i];
@@ -260,7 +261,6 @@ async function insertionSort(cube, n) {
       await sleep(speed*450);
       j--;
     }
-    // current.position.x = xPositions[j+1];
     cube[j+1] = current;
     var speed = document.getElementById("sliderRange").value;
 
@@ -276,9 +276,7 @@ async function insertionSort(cube, n) {
  * Bubble sort. Works correctly. Could use faster animation speed
  * @param {} cube 
  */
-async function bubbleSort(cube) {
-  var n = 23;
-  
+ async function bubbleSort(cube, n) {  
   var i, j;
   for (i = 0; i < n-1; i++) {
     for (j = 0; j < n-i-1; j++) {
@@ -287,6 +285,7 @@ async function bubbleSort(cube) {
         swapMixers = swap(cube, j, j+1);
         swapMixer1 = swapMixers[0];
         swapMixer2 = swapMixers[1];
+        var speed = document.getElementById("sliderRange").value;
 
         swapAnimation();
         //Wait for animation to finish before executing more code
@@ -303,22 +302,70 @@ async function bubbleSort(cube) {
   woohooCubes(n);
 }
 
+/*
+ * quickSort
+*/
+async function quickSort(cube, index1, index2) {
+  if(index1 < index2) {
+    let partIndex = await partition(cube, index1, index2);
+    
+    //Recursive calls to each pivot half. Uses await to wait for the function to be done
+    await quickSort(cube, index1, partIndex - 1);
+    await quickSort(cube, partIndex + 1, index2)
+
+  }
+}
+
+/*Quicksort partitioning
+ *Curently using cube[N] as a pivot would be better if the pivot was median of cube[0], cube[N/2], cube[N]
+ *for WC handling
+*/
+async function partition(cube, index1, index2) {
+  let i = (index1 - 1);
+  for(let j = index1; j <= index2 - 1; j++) {
+    var speed = document.getElementById("sliderRange").value;
+    if(!compareCubesWithPivot(j, index2)) {
+      i++;
+
+      swapMixers = swap(cube, i, j);
+      swapMixer1 = swapMixers[0];
+      swapMixer2 = swapMixers[1];
+      swapAnimation();
+      await sleep(speed*500);
+      resetColors(i, j);
+
+    }
+    resetColors(j, index2);
+
+  }
+  var speed = document.getElementById("sliderRange").value;
+  swapMixers = swap(cube, i + 1, index2);
+  swapMixer1 = swapMixers[0];
+  swapMixer2 = swapMixers[1];
+  swapAnimation();
+  await sleep(speed * 500);
+  resetColors(i + 1, index2);
+
+  return(i + 1);
+}
+///
 
 /// UI
 
 document.body.appendChild( renderer.domElement );
-document.getElementById("swapButton").addEventListener('click', advanceOnClick );
+document.getElementById("swapButton").addEventListener('click', swapOnClick );
 document.getElementById("resetButton").addEventListener('click', resetOnClick );
 document.getElementById("insertionSortButton").addEventListener(
   'click', insertionSortOnClick );
 document.getElementById("bubbleSortButton").addEventListener(
   'click', bubbleSortOnClick );
+document.getElementById("quickSortButton").addEventListener(
+  'click', quickSortOnClick );
 var rangeslider = document.getElementById("sliderRange");
 var output = document.getElementById("demo");
 output.innerHTML = rangeslider.value;
 
 rangeslider.oninput = function() {
-  //output.innerHTML = this.value;
 }
 ///
 
@@ -327,9 +374,6 @@ function reset(){
   for (let i = scene.children.length - 1; i >= 0; i--) {
     if(scene.children[i].type === "Mesh")
         scene.remove(scene.children[i]);
-    // if(scene.children[i].type === "AnimationAction")
-    //   scene.children[i].stop();
-      
 }
 for (let i = 0; i < arrayLength; i++) {
 
@@ -359,7 +403,6 @@ function advanceAnimation(){
   renderer.render(scene, camera);
 }
 
-
 var swapMixers;
 var swapMixer1 , swapMixer2;
 
@@ -378,28 +421,41 @@ function swapAnimation(){
   renderer.render(scene, camera);
 }
 
-
-
 function insertionSortOnClick( event ) {
   insertionSort(cube, arrayLength);
 }
 
 function bubbleSortOnClick( event ) {
-  bubbleSort(cube);
+  bubbleSort(cube, arrayLength);
+}
+
+async function quickSortOnClick( event ) {
+  await quickSort(cube, 0, arrayLength-1);
+  woohooCubes(arrayLength);
 }
 
 function resetOnClick(){
   reset();
 }
+///
 
 /**
  * Function to change color of two cubes.
  * @param {} index1 
  * @param {*} index2 
  */
-function brightCubes(index1, index2) {
+ function brightCubes(index1, index2) {
   cube[index1].material = brightMaterial;
   cube[index2].material = brightMaterial;
+  renderer.render(scene, camera);
+}
+
+/*
+ *Function to change the color of one cube
+ *
+*/
+function changeColor(index, materialChange) {
+  cube[index].material = materialChange;
   renderer.render(scene, camera);
 }
 
@@ -408,7 +464,7 @@ function brightCubes(index1, index2) {
  * @param {} index1 
  * @param {*} index2 
  */
-function resetColors(index1, index2) {
+ function resetColors(index1, index2) {
   cube[index1].material = basicMaterial;
   cube[index2].material = basicMaterial;
   renderer.render(scene, camera);
@@ -418,7 +474,7 @@ function resetColors(index1, index2) {
  * Function to quickly highlight all cubes in an animation loop
  * @param {} n - length of array
  */
-async function woohooCubes(n) {
+ async function woohooCubes(n) {
   for (var i = 0; i < n; i++) {
     cube[i].material = brightMaterial;
     renderer.render(scene, camera);

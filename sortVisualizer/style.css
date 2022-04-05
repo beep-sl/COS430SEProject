@@ -1,20 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Titan+One');
 
 body{
-    background-color : #000;
+    background-color : rgba(0, 0, 0, 1);
 }
 
 #header {
     width: 100%;
+    padding: 0;
+    background-color : rgba(0, 0, 0, 0);
+    /* align-items: center; */
+    float:left;
+    position:absolute;
+    /* display: flex;
+    flex-direction : column; */
+    /* justify-content: center; */
+    /* width: 100%; */
 
-    align-items: center;
+
+
 }
 
-#swapButtonContainer {
-  margin: 0;
-  position: relative;
-  left: 45%;
-  transform: translate(0,50%); 
+.subheading {
+  margin: 1%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+/* 
+#sortButtonContainer {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+
+} */ */
+
+.div{
+    margin:0.3%;
+}
+
+
+.sliderLabel{
+    text-align : center;
+    font-size: 200%;
+}
+
+#sliderContainer{
+    display: flex;
+    color:aliceblue;
+    justify-content: center;
+
 }
 
 .button {
@@ -23,4 +57,9 @@ body{
     color: rgb(253, 133, 169);
     background-color : rgb(55, 29, 63);
     padding: 0.5%;
+    margin: 1%;
+    border-width: 5px;
+    border-style: groove;
+    border-color: rgb(27, 20, 128);
+    border-radius: 20px;
 }

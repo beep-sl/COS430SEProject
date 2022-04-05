@@ -9,28 +9,27 @@
   </head>
   <body>
   <div id="header">
-    <div id="swapButtonContainer"> 
+  <div class="subheading">
       <button id="swapButton" class = "button">SWAP!</button>
       <button id="resetButton" class = "button">RESET!</button>
-      <div id="insertionSortButtonContainer"> 
-        <button id="insertionSortButton" class = "button" onclick="insertionSortOnClick()">INSERTION SORT!</button>
-      </div>
-      <div id="bubbleSortButtonContainer"> 
-        <button id="bubbleSortButton" class = "button" onclick="bubbleSortOnClick()">BUBBLE SORT!</button>
-      </div>
+  </div>
 
+  <div class="subheading">
+      <button id="insertionSortButton" class = "button" onclick="insertionSortOnClick()">INSERTION SORT!</button>
+      <button id="bubbleSortButton" class = "button" onclick="bubbleSortOnClick()">BUBBLE SORT!</button>
+      <button id="quickSortButton" class = "button" onclick="quickSortOnClick()">QUICK SORT!</button>
+  </div>
 
-
+  <div class="subheading">
       <div class="rangeslider">
-        <input type="range" min=".1" max="5" value="2.5"
+        <input type="range" min="0.2" max="5" value="2.5" step="0.1"
                        class="myslider" id="sliderRange">
       </div>
-
+  </div>
 
 
       
     </div>
-  </div>
     <div id="app"></div>
     <script type="module" src="/main.js"></script>
   </body>

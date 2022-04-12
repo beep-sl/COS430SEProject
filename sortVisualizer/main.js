@@ -52,7 +52,7 @@ const cubeHeights = [];
 const arrayLength = 7;
 for (let i = 0; i < arrayLength; i++) {
 
-  let h = Math.abs(3+Math.random()*10)
+  let h = Math.abs(3+Math.random()*10);
   cubeHeights.push(h);
   let geometry = new THREE.BoxGeometry(1, h, 1);
   cube[i] = new THREE.Mesh(geometry, basicMaterial);
@@ -174,7 +174,7 @@ function compareCubes(index1, index2){
  * Compare cube but changes pivot color
 */
 function compareCubesWithPivot(index1, pivot){
-  changeColor(index1, brightMaterial)
+  changeColor(index1, brightMaterial);
   changeColor(pivot, pivotColor);
   return (cube[index1].geometry.parameters.height > cube[pivot].geometry.parameters.height);
 }
@@ -257,8 +257,8 @@ function moveCubeRelativelyZ(theCube, relMotion){
     let j = i-1;
     var speed = document.getElementById("sliderRange").value;
     current.material = pivotColor;
-    advanceMixer = moveCubeRelativelyZ(current, 2);
-    advanceAnimation();
+    swapMixer1 = moveCubeRelativelyZ(current, 2);
+    swapAnimation();
     cube[j].material = brightMaterial;
     await sleep(speed*450);
     if (cube[j].geometry.parameters.height < current.geometry.parameters.height){
@@ -270,11 +270,11 @@ function moveCubeRelativelyZ(theCube, relMotion){
       cube[j].material = brightMaterial;
       addLine("\ncube["+j+"] is larger than current cube");
       var speed = document.getElementById("sliderRange").value;
-      advanceMixer = moveCubeRelativelyX(current, j+1, -1);
+      swapMixer2 = moveCubeRelativelyX(current, j+1, -1);
       addLine("advance cube["+j+"]");
       await sleep(speed*450);
 
-      advanceMixer = moveCubeRelativelyX(cube[j],j, 1);
+      swapMixer2 = moveCubeRelativelyX(cube[j],j, 1);
       cube[j+1] = cube[j];
       await sleep(speed*450);
       j--;
@@ -294,7 +294,7 @@ function moveCubeRelativelyZ(theCube, relMotion){
     cube[j+1] = current;
     var speed = document.getElementById("sliderRange").value;
 
-    advanceMixer = moveCubeRelativelyZ(current, -2);
+    swapMixer1 = moveCubeRelativelyZ(current, -2);
     await sleep(speed*450);
     current.material = basicMaterial;
   }
@@ -419,19 +419,6 @@ renderer.render(scene, camera);
 }
 
 //ANIMATION
-var advanceMixer;
-
-function advanceOnClick() {
-  advanceMixer = moveCubeRelativelyX(cube[5],5, 1);
-  advanceAnimation();
-}
-
-function advanceAnimation(){
-  requestAnimationFrame(advanceAnimation);
-  let delta = clock.getDelta();
-  advanceMixer.update(delta);
-  renderer.render(scene, camera);
-}
 
 var swapMixers;
 var swapMixer1 , swapMixer2;
@@ -444,8 +431,12 @@ function swapOnClick() {
 function swapAnimation(){
   requestAnimationFrame(swapAnimation);
   let delta = clock.getDelta();
-  swapMixer1.update(delta);
-  swapMixer2.update(delta);
+  if(swapMixer1 != null){
+    swapMixer1.update(delta);
+  }
+  if(swapMixer2 != null){
+    swapMixer2.update(delta);
+  }
   renderer.render(scene, camera);
 }
 

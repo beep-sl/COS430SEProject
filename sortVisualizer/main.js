@@ -11,13 +11,24 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight,
   0.5, 1000);
 console.log("Hello World");
-camera.position.x = 30; 
-camera.position.y = 8;
-camera.position.z = 45;
+camera.position.x = 0; 
+camera.position.y = 27;
+camera.position.z = 25;
 
 var renderer = new THREE.WebGL1Renderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+
+let message = "";
+let count = 0;
+document.querySelector("#textOut").innerText = message;
+
+
+function addLine(string){
+  message =  message + "\n" + string;
+  document.querySelector("#textOut").innerText = message;
+}
+
 
 ///  LIGHTS
 const ambLight = new THREE.AmbientLight(0xFFFFFF, 1);
@@ -38,7 +49,7 @@ const pivotColor = new THREE.MeshStandardMaterial({color: 0xFF0000})
 var cube = [];
 const xPositions = [];
 const cubeHeights = [];
-const arrayLength = 13;
+const arrayLength = 7;
 for (let i = 0; i < arrayLength; i++) {
 
   let h = Math.abs(3+Math.random()*10)
@@ -242,33 +253,50 @@ function moveCubeRelativelyZ(theCube, relMotion){
 
   for (var i = 1; i < n; i++) {
     let current = cube[i];
+    addLine("\ncurrent cube is cube["+i+"]");
     let j = i-1;
     var speed = document.getElementById("sliderRange").value;
-    current.material = brightMaterial;
+    current.material = pivotColor;
     advanceMixer = moveCubeRelativelyZ(current, 2);
     advanceAnimation();
+    cube[j].material = brightMaterial;
     await sleep(speed*450);
+    if (cube[j].geometry.parameters.height < current.geometry.parameters.height){
+      await sleep(speed*100);
+      cube[j].material = basicMaterial;
+    }
 
     while((j > -1) && (cube[j].geometry.parameters.height > current.geometry.parameters.height)){
+      cube[j].material = brightMaterial;
+      addLine("\ncube["+j+"] is larger than current cube");
       var speed = document.getElementById("sliderRange").value;
       advanceMixer = moveCubeRelativelyX(current, j+1, -1);
-      advanceAnimation();
+      addLine("advance cube["+j+"]");
       await sleep(speed*450);
 
       advanceMixer = moveCubeRelativelyX(cube[j],j, 1);
-      advanceAnimation();
       cube[j+1] = cube[j];
       await sleep(speed*450);
       j--;
+      cube[j+1].material = basicMaterial;
     }
+    if (j > -1){
+      cube[j].material = brightMaterial;
+      await sleep(speed*200);
+      cube[j].material = basicMaterial;
+      addLine("\ncube["+j+"] is smaller than current cube");
+      addLine("insert current cube at position " + (j+1).toString());
+    }else{
+      addLine("\ncurrent cube is at the last position");
+      addLine("insert current cube at position 0");
+    }
+
     cube[j+1] = current;
     var speed = document.getElementById("sliderRange").value;
 
     advanceMixer = moveCubeRelativelyZ(current, -2);
-    advanceAnimation();
     await sleep(speed*450);
     current.material = basicMaterial;
-
   }
 }
 
@@ -370,7 +398,9 @@ rangeslider.oninput = function() {
 ///
 
 function reset(){
-
+  message = "";
+  addLine("");
+  count = 0;
   for (let i = scene.children.length - 1; i >= 0; i--) {
     if(scene.children[i].type === "Mesh")
         scene.remove(scene.children[i]);
@@ -407,10 +437,8 @@ var swapMixers;
 var swapMixer1 , swapMixer2;
 
 function swapOnClick() {
-  swapMixers = swap(cube, 5, 12);
-  swapMixer1 = swapMixers[0];
-  swapMixer2 = swapMixers[1];
-  swapAnimation();
+  addLine("Hi Mom! " +count);
+  count = count+1;
 }
 
 function swapAnimation(){

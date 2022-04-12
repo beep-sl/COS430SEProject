@@ -1,23 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Titan+One');
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&family=Source+Code+Pro:wght@600');
 
 body{
     background-color : rgba(0, 0, 0, 1);
 }
 
 #header {
-    width: 100%;
+    width: 80%;
     padding: 0;
     background-color : rgba(0, 0, 0, 0);
-    /* align-items: center; */
-    float:left;
+    top: 0;
+    left: 20%;
     position:absolute;
-    /* display: flex;
-    flex-direction : column; */
-    /* justify-content: center; */
-    /* width: 100%; */
-
-
-
 }
 
 .subheading {
@@ -26,13 +19,7 @@ body{
   width: 100%;
   justify-content: center;
 }
-/* 
-#sortButtonContainer {
-    margin: 0;
-    display: flex;
-    justify-content: center;
 
-} */ */
 
 .div{
     margin:0.3%;
@@ -62,4 +49,25 @@ body{
     border-style: groove;
     border-color: rgb(27, 20, 128);
     border-radius: 20px;
+}
+
+#textContainer{
+    position:absolute;
+
+    width: 20%;
+    height: 95%;
+    left: 0%;
+    bottom: 5%;
+    padding: 0;
+    background-color : rgba(46, 46, 46, 0.4);
+}
+#textOut{
+    font-family: 'Source Code Pro', monospace;
+    font-size:large;
+    padding: 0;
+    background-color : rgba(46, 46, 46, 0);
+    left: 0%;
+    bottom: 0%;
+    position:absolute;
+    color : rgb(223, 188, 233);
 }

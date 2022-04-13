@@ -38,6 +38,16 @@ body{
 
 }
 
+
+.rangeContainer{
+    display: flex;
+    flex-direction:column;
+    font-family: 'Titan One', cursive;
+    font-size: 100%;
+    color: rgb(253, 133, 169);
+    align-items: center;
+}
+
 .button {
     font-family: 'Titan One', cursive;
     font-size: 300%;

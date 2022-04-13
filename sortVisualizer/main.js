@@ -1,9 +1,7 @@
 import './style.css'
 import{OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
-import {AnimationClip, Clock,  NumberKeyframeTrack, VectorKeyframeTrack , AnimationMixer} from 'three';
+import {AnimationClip, Clock, VectorKeyframeTrack , AnimationMixer} from 'three';
 import * as THREE from 'three';
-import * as dat from 'dat.gui';
-import { SkeletonHelper } from 'three';
 
 /// SET UP
 const clock = new Clock();
@@ -11,17 +9,35 @@ var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight,
   0.5, 1000);
 console.log("Hello World");
-camera.position.x = 0; 
-camera.position.y = 27;
+camera.position.x = -10; 
+camera.position.y = 20;
 camera.position.z = 25;
-
 var renderer = new THREE.WebGL1Renderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+
+document.querySelector("#speed").innerText = "Speed: " + document.getElementById("speedSlider").value;
+
+document.querySelector("#size").innerText = "Size: " + document.getElementById("sizeSlider").value;
+
+
+
+document.getElementById("speedSlider").oninput = () => 
+  document.querySelector("#speed").innerText = "Speed: " + document.getElementById("speedSlider").value;
+
+
+document.getElementById("sizeSlider").oninput = () => 
+  document.querySelector("#size").innerText = "Size: " + document.getElementById("sizeSlider").value;
+
+
 let message = "";
 let count = 0;
 document.querySelector("#textOut").innerText = message;
+
+document.getElementById("sizeSlider").oninput = () => 
+  document.querySelector("#size").innerText = "Size: " + document.getElementById("sizeSlider").value;
+
 
 
 function addLine(string){
@@ -47,25 +63,36 @@ var brightMaterial = new THREE.MeshStandardMaterial({color: 0x1F0FFF});
 const pivotColor = new THREE.MeshStandardMaterial({color: 0xFF0000})
 
 var cube = [];
-const xPositions = [];
-const cubeHeights = [];
-const arrayLength = 7;
+var xPositions = [];
+var cubeHeights = [];
+var arrayLength = document.getElementById("sizeSlider").value;
+
+
+function randomize(){
+  cubeHeights = [];
+  xPositions = [];
+
+  for (let i = 0; i < document.getElementById("sizeSlider").max; i++) {
+    let h = Math.abs(3+Math.random()*10);
+    cubeHeights.push(h);
+    xPositions.push((i * 2));
+  }
+}
+randomize();
+
 for (let i = 0; i < arrayLength; i++) {
-
-  let h = Math.abs(3+Math.random()*10);
-  cubeHeights.push(h);
-  let geometry = new THREE.BoxGeometry(1, h, 1);
+  let geometry = new THREE.BoxGeometry(1, cubeHeights[i], 1);
   cube[i] = new THREE.Mesh(geometry, basicMaterial);
-
-  xPositions.push((i * 2) - (arrayLength));
   cube[i].position.x = xPositions[i];
-  cube[i].position.y += h/2;
+  cube[i].position.y += cubeHeights[i]/2;
   scene.add(cube[i]);
 }
 
 /// CAMERA
 
 const controls = new OrbitControls(camera, renderer.domElement);
+
+camera.lookAt(cube[0]);
 
 function cameraAnimate() {
   requestAnimationFrame(cameraAnimate);
@@ -80,7 +107,7 @@ cameraAnimate();
 
 /// the swap animation using keyframes
 function swap(cubes, index1, index2){
-  var speed = document.getElementById("sliderRange").value;
+  var speed = document.getElementById("speedSlider").value;
   let cube1 = cubes[index1]; 
   let kube2 = cubes[index2];
 
@@ -180,7 +207,7 @@ function compareCubesWithPivot(index1, pivot){
 }
 
 function moveCubeRelativelyX(theCube, initPos, relMotion){
-  var speed = document.getElementById("sliderRange").value;
+  var speed = document.getElementById("speedSlider").value;
   // let theCube = cube[cubeIndex]; 
 
   let times = [0, (speed * .3)];
@@ -214,7 +241,7 @@ function moveCubeRelativelyX(theCube, initPos, relMotion){
 }
 
 function moveCubeRelativelyZ(theCube, relMotion){
-  var speed = document.getElementById("sliderRange").value;
+  var speed = document.getElementById("speedSlider").value;
   let times = [0, (speed * .3)];
   let currentPosZ = theCube.position.z;
 
@@ -255,7 +282,7 @@ function moveCubeRelativelyZ(theCube, relMotion){
     let current = cube[i];
     addLine("\ncurrent cube is cube["+i+"]");
     let j = i-1;
-    var speed = document.getElementById("sliderRange").value;
+    var speed = document.getElementById("speedSlider").value;
     current.material = pivotColor;
     swapMixer1 = moveCubeRelativelyZ(current, 2);
     swapAnimation();
@@ -269,7 +296,7 @@ function moveCubeRelativelyZ(theCube, relMotion){
     while((j > -1) && (cube[j].geometry.parameters.height > current.geometry.parameters.height)){
       cube[j].material = brightMaterial;
       addLine("\ncube["+j+"] is larger than current cube");
-      var speed = document.getElementById("sliderRange").value;
+      var speed = document.getElementById("speedSlider").value;
       swapMixer2 = moveCubeRelativelyX(current, j+1, -1);
       addLine("advance cube["+j+"]");
       await sleep(speed*450);
@@ -292,41 +319,48 @@ function moveCubeRelativelyZ(theCube, relMotion){
     }
 
     cube[j+1] = current;
-    var speed = document.getElementById("sliderRange").value;
+    var speed = document.getElementById("speedSlider").value;
 
     swapMixer1 = moveCubeRelativelyZ(current, -2);
     await sleep(speed*450);
     current.material = basicMaterial;
   }
+  addLine("Array sorted.");
+  woohooCubes(n);
 }
 
 /**
  * Bubble sort. Works correctly. Could use faster animation speed
  * @param {} cube 
  */
- async function bubbleSort(cube, n) {  
+ async function bubbleSort(cube, n) {
+  //displayBubbleAlgo();
   var i, j;
-  for (i = 0; i < n-1; i++) {
-    for (j = 0; j < n-i-1; j++) {
-      var speed = document.getElementById("sliderRange").value;
-      if (compareCubes(j,j+1)) {
-        swapMixers = swap(cube, j, j+1);
+  for (i = 0; i < n - 1; i++) {
+    for (j = 0; j < n - i - 1; j++) {
+      var speed = document.getElementById("speedSlider").value;
+      addLine("Comparing Cube[" + j + "] and Cube[" + (j + 1) + "]");
+      if (compareCubes(j, j + 1)) {
+        addLine("Cube[" + j + "] > " + "Cube[" + (j + 1) + "]");
+        addLine("\nSwapping " + j + " and " + (j + 1) + "\n");
+        swapMixers = swap(cube, j, j + 1);
         swapMixer1 = swapMixers[0];
         swapMixer2 = swapMixers[1];
-        var speed = document.getElementById("sliderRange").value;
+        var speed = document.getElementById("speedSlider").value;
 
         swapAnimation();
         //Wait for animation to finish before executing more code
         await sleep(speed * 450);
 
-        resetColors(j, j+1);
-      }else{
+        resetColors(j, j + 1);
+      } else {
         await sleep(speed * 230);
 
-        resetColors(j, j+1);
+        resetColors(j, j + 1);
       }
     }
   }
+  addLine("Array sorted.");
   woohooCubes(n);
 }
 
@@ -340,7 +374,6 @@ async function quickSort(cube, index1, index2) {
     //Recursive calls to each pivot half. Uses await to wait for the function to be done
     await quickSort(cube, index1, partIndex - 1);
     await quickSort(cube, partIndex + 1, index2)
-
   }
 }
 
@@ -351,7 +384,7 @@ async function quickSort(cube, index1, index2) {
 async function partition(cube, index1, index2) {
   let i = (index1 - 1);
   for(let j = index1; j <= index2 - 1; j++) {
-    var speed = document.getElementById("sliderRange").value;
+    var speed = document.getElementById("speedSlider").value;
     if(!compareCubesWithPivot(j, index2)) {
       i++;
 
@@ -366,7 +399,7 @@ async function partition(cube, index1, index2) {
     resetColors(j, index2);
 
   }
-  var speed = document.getElementById("sliderRange").value;
+  var speed = document.getElementById("speedSlider").value;
   swapMixers = swap(cube, i + 1, index2);
   swapMixer1 = swapMixers[0];
   swapMixer2 = swapMixers[1];
@@ -381,7 +414,7 @@ async function partition(cube, index1, index2) {
 /// UI
 
 document.body.appendChild( renderer.domElement );
-document.getElementById("swapButton").addEventListener('click', swapOnClick );
+document.getElementById("randomizeButton").addEventListener('click', RandomizeOnClick );
 document.getElementById("resetButton").addEventListener('click', resetOnClick );
 document.getElementById("insertionSortButton").addEventListener(
   'click', insertionSortOnClick );
@@ -389,7 +422,7 @@ document.getElementById("bubbleSortButton").addEventListener(
   'click', bubbleSortOnClick );
 document.getElementById("quickSortButton").addEventListener(
   'click', quickSortOnClick );
-var rangeslider = document.getElementById("sliderRange");
+var rangeslider = document.getElementById("speedSlider");
 var output = document.getElementById("demo");
 output.innerHTML = rangeslider.value;
 
@@ -401,6 +434,9 @@ function reset(){
   message = "";
   addLine("");
   count = 0;
+
+  arrayLength = document.getElementById("sizeSlider").value;
+
   for (let i = scene.children.length - 1; i >= 0; i--) {
     if(scene.children[i].type === "Mesh")
         scene.remove(scene.children[i]);
@@ -423,9 +459,9 @@ renderer.render(scene, camera);
 var swapMixers;
 var swapMixer1 , swapMixer2;
 
-function swapOnClick() {
-  addLine("Hi Mom! " +count);
-  count = count+1;
+function RandomizeOnClick() {
+  randomize();
+  reset();
 }
 
 function swapAnimation(){
@@ -450,6 +486,7 @@ function bubbleSortOnClick( event ) {
 
 async function quickSortOnClick( event ) {
   await quickSort(cube, 0, arrayLength-1);
+  addLine("Array sorted.");
   woohooCubes(arrayLength);
 }
 

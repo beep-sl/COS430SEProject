@@ -9,32 +9,35 @@
   </head>
   <body>
   <div id="header">
-    <div id="swapButtonContainer"> 
-      <button id="swapButton" class = "button">SWAP!</button>
+    <div class="subheading">
       <button id="resetButton" class = "button">RESET!</button>
-      <div id="insertionSortButtonContainer"> 
+      <button id="randomizeButton" class = "button">RANDOMIZE!</button>  
+    </div>
+
+    <div class="subheading">
         <button id="insertionSortButton" class = "button" onclick="insertionSortOnClick()">INSERTION SORT!</button>
-      </div>
-      <div id="bubbleSortButtonContainer"> 
         <button id="bubbleSortButton" class = "button" onclick="bubbleSortOnClick()">BUBBLE SORT!</button>
-      </div>
-      <div id="quickSortButtonContainer">
         <button id="quickSortButton" class = "button" onclick="quickSortOnClick()">QUICK SORT!</button>
-      </div>
+    </div>
 
+    <div class="subheading">
+        <div class="rangeContainer">
+          <input type="range" min="0.2" max="5" value="2.5" step="0.1"
+                        class="myslider" id="speedSlider">
+                        <a id="speed">Speed</a>
+        </div>
+        <div class="rangeContainer">
+          <input type="range" min="2" max="50" value="7" step="1"
+                        class="sizeSlide" id="sizeSlider">
+                        <a id="size">Size</a>
 
-
-      <div class="rangeslider">
-        <input type="range" min=".1" max="5" value="2.5"
-                       class="myslider" id="sliderRange">
-      </div>
-
-
-
-      
+        </div>
     </div>
   </div>
-    <div id="app"></div>
+  <div id="textContainer">
+    <div id="textOut"></div>
+  </div>
+  <div id="app"></div>
     <script type="module" src="/main.js"></script>
   </body>
 </html>

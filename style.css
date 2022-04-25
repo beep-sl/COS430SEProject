@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&family=Source+Code+Pro:wght@600');
+
+body{
+    background-color : rgba(0, 0, 0, 1);
+}
+
+#header {
+    width: 80%;
+    padding: 0;
+    background-color : rgba(0, 0, 0, 0);
+    top: 0;
+    left: 20%;
+    position:absolute;
+}
+
+.subheading {
+  margin: 1%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+
+.div{
+    margin:0.3%;
+}
+
+
+.sliderLabel{
+    text-align : center;
+    font-size: 200%;
+}
+
+#sliderContainer{
+    display: flex;
+    color:aliceblue;
+    justify-content: center;
+
+}
+
+
+.rangeContainer{
+    display: flex;
+    flex-direction:column;
+    font-family: 'Titan One', cursive;
+    font-size: 100%;
+    color: rgb(253, 133, 169);
+    align-items: center;
+}
+
+.button {
+    font-family: 'Titan One', cursive;
+    font-size: 300%;
+    color: rgb(253, 133, 169);
+    background-color : rgb(55, 29, 63);
+    padding: 0.5%;
+    margin: 1%;
+    border-width: 5px;
+    border-style: groove;
+    border-color: rgb(27, 20, 128);
+    border-radius: 20px;
+}
+
+#textContainer{
+    position:absolute;
+
+    width: 20%;
+    height: 95%;
+    left: 0%;
+    bottom: 5%;
+    padding: 0;
+    background-color : rgba(46, 46, 46, 0.4);
+}
+#textOut{
+    font-family: 'Source Code Pro', monospace;
+    font-size:large;
+    padding: 0;
+    background-color : rgba(46, 46, 46, 0);
+    left: 0%;
+    bottom: 0%;
+    position:absolute;
+    color : rgb(223, 188, 233);
+}

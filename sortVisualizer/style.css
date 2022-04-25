@@ -81,3 +81,22 @@ body{
     position:absolute;
     color : rgb(223, 188, 233);
 }
+#clickOptionsContainer{
+    position:absolute;
+
+    width: 50%;
+    height: 20%;
+    left: 50%;
+    bottom: 5%;
+    padding: 0;
+}
+#clickOptions{
+    font-family: 'Source Code Pro', monospace;
+    font-size:large;
+    padding: 0;
+    background-color : rgba(46, 46, 46, 0);
+    left: 20%;
+    bottom: 0%;
+    position:absolute;
+    color : rgb(223, 188, 233);
+}

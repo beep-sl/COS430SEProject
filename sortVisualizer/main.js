@@ -32,6 +32,7 @@ document.getElementById("sizeSlider").oninput = () =>
 
 
 let message = "";
+let clickOptions = "";
 let count = 0;
 document.querySelector("#textOut").innerText = message;
 
@@ -46,8 +47,8 @@ function addLine(string){
 }
 
 function clickFunctions(){
-  message =  "Click & Drag: Adjust orientation\nRight Click & Drag: Move Array\nScroll: Zoom in/out";
-  document.querySelector("#clickOptions").innerText = message;
+  clickOptions =  "Click & Drag: Adjust orientation\nRight Click & Drag: Move Array\nScroll: Zoom in/out";
+  document.querySelector("#clickOptions").innerText = clickOptions;
 }
 clickFunctions();
 

@@ -46,7 +46,7 @@ function addLine(string){
 }
 
 function clickFunctions(){
-  message =  "Click & Drag: Adjust orientation\nRight click: Move Array\nScroll: Zoom in/out";
+  message =  "Click & Drag: Adjust orientation\nRight Click & Drag: Move Array\nScroll: Zoom in/out";
   document.querySelector("#clickOptions").innerText = message;
 }
 clickFunctions();

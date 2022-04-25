@@ -45,6 +45,12 @@ function addLine(string){
   document.querySelector("#textOut").innerText = message;
 }
 
+function clickFunctions(){
+  message =  "Click & Drag: Adjust orientation\nRight click: Move Array\nScroll: Zoom in/out";
+  document.querySelector("#clickOptions").innerText = message;
+}
+clickFunctions();
+
 
 ///  LIGHTS
 const ambLight = new THREE.AmbientLight(0xFFFFFF, 1);
@@ -374,6 +380,7 @@ async function quickSort(cube, index1, index2) {
     //Recursive calls to each pivot half. Uses await to wait for the function to be done
     await quickSort(cube, index1, partIndex - 1);
     await quickSort(cube, partIndex + 1, index2)
+
   }
 }
 
@@ -383,16 +390,18 @@ async function quickSort(cube, index1, index2) {
 */
 async function partition(cube, index1, index2) {
   let i = (index1 - 1);
+  addLine("Picking cube[" + index2 + "] as the pivot\n");
   for(let j = index1; j <= index2 - 1; j++) {
     var speed = document.getElementById("speedSlider").value;
     if(!compareCubesWithPivot(j, index2)) {
       i++;
 
+      addLine("cube[" + j + "] is less than cube[" + index2 + "]\nSwapping cube[" + i + "] and cube[" + j + "]\n");
       swapMixers = swap(cube, i, j);
       swapMixer1 = swapMixers[0];
       swapMixer2 = swapMixers[1];
-      swapAnimation();
       await sleep(speed*500);
+      swapAnimation();
       resetColors(i, j);
 
     }
@@ -400,6 +409,7 @@ async function partition(cube, index1, index2) {
 
   }
   var speed = document.getElementById("speedSlider").value;
+  await addLine("Swapping cube[" + ( i + 1 )+ "] with cube[" + index2 + "]\n");
   swapMixers = swap(cube, i + 1, index2);
   swapMixer1 = swapMixers[0];
   swapMixer2 = swapMixers[1];

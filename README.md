@@ -45,9 +45,16 @@ There are many web-based visualizations across the internet for learning algorit
 #### Iteration #3
 | Items        | Description              | Action Items and Deliverables                                                             |
 |--------------|--------------------------|-------------------------------------------------------------------------------------------|
-| User Story 1 | Creating more functions/buttons to address all other applicable sorts                                                |
-| User Story 2 | Creating a header/footer for the website                                                                             |
-| User Story 3 | Publishing the website                                                                                               |
+| User Story 1 | Creating more functions/buttons to address all other applicable sorts  |
+| User Story 2 | Adding functionality to header    |
+| User Story 3 | Text Output  |
+
+
+#### Final Demo #3
+| Items        | Description              | Action Items and Deliverables                                                             |
+|--------------|--------------------------|-------------------------------------------------------------------------------------------|
+| User Story 1 | Adding instructional footer | 
+| User Story 2 | Publishing the website | 
 
 
 ## UML Diagrams 
@@ -74,9 +81,8 @@ https://app.diagrams.net/#Hbeep-sl%2FCOS430SEProject%2Fmain%2FDeployment%20Diagr
 
 ## References and Further Information 
 
-<br>[1: Reference AAA](https://usm.maine.edu/)</br>
-<br>[2: Reference BBB](https://usm.maine.edu/)</br>
-<br>[3: Reference CCC](https://usm.maine.edu/)</br>
+<br>[ThreeJS](https://threejs.org/)</br>
+<br>[A ThreeJS tutorial](https://www.youtube.com/watch?v=Q7AOvWpIVHU)</br>
 
 
 
